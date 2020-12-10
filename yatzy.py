@@ -17,8 +17,10 @@ class Player:
 
 class GUI:
     def __init__(self):
-        # self.throw_button = tkinter.Button(window, text="Throw", command=turn.roll())
-        # self.throw_button.grid(row=1,column=2)
+        self.throw_button = tkinter.Button(window, text="Throw")
+        self.throw_button.grid(row=1,column=2)
+        self.next_button = tkinter.Button(window, text="Next turn", command=self.reset_turn, state="disabled")
+        self.next_button.grid(row=1,column=3)
 
         self.dices = [tkinter.Label(window, text="").grid(row=2,column=2),
                       tkinter.Label(window, text="").grid(row=2,column=3),
@@ -85,12 +87,11 @@ class GUI:
         self.hands_vars = [tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),
                            tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),
                            tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar(),tkinter.IntVar()]
-        self.dbuttons = [tkinter.Checkbutton(window, variable=self.dice_vars[0]).grid(row=3,column=2),
-                         tkinter.Checkbutton(window, variable=self.dice_vars[1]).grid(row=3,column=3),
-                         tkinter.Checkbutton(window, variable=self.dice_vars[2]).grid(row=3,column=4),
-                         tkinter.Checkbutton(window, variable=self.dice_vars[3]).grid(row=3,column=5),
-                         tkinter.Checkbutton(window, variable=self.dice_vars[4]).grid(row=3,column=6)]    
-        
+        self.dbuttons = [tkinter.Checkbutton(window, variable=self.dice_vars[0]),
+                         tkinter.Checkbutton(window, variable=self.dice_vars[1]),
+                         tkinter.Checkbutton(window, variable=self.dice_vars[2]),
+                         tkinter.Checkbutton(window, variable=self.dice_vars[3]),
+                         tkinter.Checkbutton(window, variable=self.dice_vars[4])]    
         self.hbuttons = [tkinter.Checkbutton(window, variable=self.hands_vars[0]),
                          tkinter.Checkbutton(window, variable=self.hands_vars[1]),
                          tkinter.Checkbutton(window, variable=self.hands_vars[2]),
@@ -106,6 +107,10 @@ class GUI:
                          tkinter.Checkbutton(window, variable=self.hands_vars[12]),
                          tkinter.Checkbutton(window, variable=self.hands_vars[13]),
                          tkinter.Checkbutton(window, variable=self.hands_vars[14])]
+        i = 0
+        for button in self.dbuttons:
+            button.grid(row=3, column=2+i)
+            i += 1
         i = 0
         for button in self.hbuttons:
             button.grid(row=i+4, column=2)
@@ -131,15 +136,31 @@ class GUI:
                 break
             i += 1
 
-        for box in self.hbuttons:
-            box.deselect()
+
+    def add_command_to_button(self, turn):
+        self.throw_button.configure(command=turn.roll)
+
+
+    def change_buttons(self, state):
+        if state == 0:
+            self.throw_button.configure(state="disabled")
+            self.next_button.configure(state="normal")
+        else:
+            self.throw_button.configure(state="normal")
+            self.next_button.configure(state="disabled")
+
 
     def reset_turn(self):   
         self.add_score()
+        for box in self.hbuttons:
+            box.deselect()
+        for box in self.dbuttons:
+            box.deselect()
         i = 0
         for button in self.vars:
             self.vars[i].set("")
             i += 1
+        self.change_buttons(1)
 
 
         
@@ -149,16 +170,19 @@ class Game:
         self.round = 0
         self.players = []
         self.gui = gui
+        # self.button = ""
 
     def start(self):
         turn = Turn(self.gui)
-        throw_button = tkinter.Button(window, text="Throw", command=turn.roll)
-        throw_button.grid(row=1,column=2)
+        self.gui.add_command_to_button(turn)
+        # self.button = tkinter.Button(window, text="Throw", command=turn.roll)
+        # self.button.grid(row=1,column=2)
         #self.gui.reset_turn()
         # self.round += 1
         # while self.round < 15:
         #     turn = Turn(self.gui)
         #     self.round += 1
+        
 
 class Scores:
     def __init__(self):
@@ -206,8 +230,7 @@ class Turn:
 
         else:
             self.give_possible_hands()
-            next_button = tkinter.Button(window, text="Next turn", command=self.gui.reset_turn)
-            next_button.grid(row=1,column=3)
+            self.gui.change_buttons(0)
             # self.gui.reset_turn()
             self.rolls = 0 # poista tää kun monta pelaajaa?
             # self.hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
