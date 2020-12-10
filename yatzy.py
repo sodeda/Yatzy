@@ -42,21 +42,28 @@ class GUI:
                            tkinter.Label(window, text="Sattuma: ").grid(row=17,column=0),
                            tkinter.Label(window, text="YATZY: ").grid(row=18,column=0)]
         
-        self.hands = [tkinter.Label(window, text="").grid(row=4,column=1),
-                      tkinter.Label(window, text="").grid(row=5,column=1),
-                      tkinter.Label(window, text="").grid(row=6,column=1),
-                      tkinter.Label(window, text="").grid(row=7,column=1),
-                      tkinter.Label(window, text="").grid(row=8,column=1),
-                      tkinter.Label(window, text="").grid(row=9,column=1),
-                      tkinter.Label(window, text="").grid(row=10,column=1),
-                      tkinter.Label(window, text="").grid(row=11,column=1),
-                      tkinter.Label(window, text="").grid(row=12,column=1),
-                      tkinter.Label(window, text="").grid(row=13,column=1),
-                      tkinter.Label(window, text="").grid(row=14,column=1),
-                      tkinter.Label(window, text="").grid(row=15,column=1),
-                      tkinter.Label(window, text="").grid(row=16,column=1),
-                      tkinter.Label(window, text="").grid(row=17,column=1),
-                      tkinter.Label(window, text="").grid(row=18,column=1)]
+        self.vars = [tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),
+                     tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),
+                     tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar()]
+        self.hands = [tkinter.Label(window, textvariable=self.vars[0]).grid(row=4,column=1),
+                      tkinter.Label(window, textvariable=self.vars[1]).grid(row=5,column=1),
+                      tkinter.Label(window, textvariable=self.vars[2]).grid(row=6,column=1),
+                      tkinter.Label(window, textvariable=self.vars[3]).grid(row=7,column=1),
+                      tkinter.Label(window, textvariable=self.vars[4]).grid(row=8,column=1),
+                      tkinter.Label(window, textvariable=self.vars[5]).grid(row=9,column=1),
+                      tkinter.Label(window, textvariable=self.vars[6]).grid(row=10,column=1),
+                      tkinter.Label(window, textvariable=self.vars[7]).grid(row=11,column=1),
+                      tkinter.Label(window, textvariable=self.vars[8]).grid(row=12,column=1),
+                      tkinter.Label(window, textvariable=self.vars[9]).grid(row=13,column=1),
+                      tkinter.Label(window, textvariable=self.vars[10]).grid(row=14,column=1),
+                      tkinter.Label(window, textvariable=self.vars[11]).grid(row=15,column=1),
+                      tkinter.Label(window, textvariable=self.vars[12]).grid(row=16,column=1),
+                      tkinter.Label(window, textvariable=self.vars[13]).grid(row=17,column=1),
+                      tkinter.Label(window, textvariable=self.vars[14]).grid(row=18,column=1)]
+        i = 0
+        for button in self.vars:
+            self.vars[i].set("")
+            i += 1
         
         self.points = [tkinter.Label(window, text="").grid(row=4,column=7),
                        tkinter.Label(window, text="").grid(row=5,column=7),
@@ -105,7 +112,7 @@ class GUI:
             i += 1
 
     def update_possible_hand(self, new_hand, nro):
-        self.hands[nro] = new_hand
+        self.vars[nro].set(new_hand)
         
 
     def update_dice(self, nro):
@@ -116,42 +123,42 @@ class GUI:
         return self.dice_vars[nro].get()
     
     
-    def add_score(self, hands):
+    def add_score(self):
         i = 0
         for hand in self.hands_vars:
             if hand.get():
-                self.points[i] = tkinter.Label(window, text=hands[i]).grid(row=i+4,column=7)
+                self.points[i] = tkinter.Label(window, text=self.vars[i].get()).grid(row=i+4,column=7)
                 break
             i += 1
 
         for box in self.hbuttons:
             box.deselect()
-            
-        # self.hands = [tkinter.Label(window, text="").grid(row=4,column=1),
-        #               tkinter.Label(window, text="").grid(row=5,column=1),
-        #               tkinter.Label(window, text="").grid(row=6,column=1),
-        #               tkinter.Label(window, text="").grid(row=7,column=1),
-        #               tkinter.Label(window, text="").grid(row=8,column=1),
-        #               tkinter.Label(window, text="").grid(row=9,column=1),
-        #               tkinter.Label(window, text="").grid(row=10,column=1),
-        #               tkinter.Label(window, text="").grid(row=11,column=1),
-        #               tkinter.Label(window, text="").grid(row=12,column=1),
-        #               tkinter.Label(window, text="").grid(row=13,column=1),
-        #               tkinter.Label(window, text="").grid(row=14,column=1),
-        #               tkinter.Label(window, text="").grid(row=15,column=1),
-        #               tkinter.Label(window, text="").grid(row=16,column=1),
-        #               tkinter.Label(window, text="").grid(row=17,column=1),
-        #               tkinter.Label(window, text="").grid(row=18,column=1)]
+
+    def reset_turn(self):   
+        self.add_score()
+        i = 0
+        for button in self.vars:
+            self.vars[i].set("")
+            i += 1
+
+
         
         
 class Game:
-    def __init__(self):
+    def __init__(self, gui):
         self.round = 0
         self.players = []
+        self.gui = gui
 
     def start(self):
-        pass
-
+        turn = Turn(self.gui)
+        throw_button = tkinter.Button(window, text="Throw", command=turn.roll)
+        throw_button.grid(row=1,column=2)
+        #self.gui.reset_turn()
+        # self.round += 1
+        # while self.round < 15:
+        #     turn = Turn(self.gui)
+        #     self.round += 1
 
 class Scores:
     def __init__(self):
@@ -162,6 +169,7 @@ class Turn:
     def __init__(self, gui):
         self.rolls = 0
         self.hand  = [0, 0, 0, 0, 0]
+        self.hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         self.gui = gui
 
     def roll(self):
@@ -197,41 +205,37 @@ class Turn:
             self.rolls += 1
 
         else:
-            hands = self.give_possible_hands()
-            self.gui.add_score(hands)
-            # self.rolls = 0 # poista tää kun monta pelaajaa?
+            self.give_possible_hands()
+            next_button = tkinter.Button(window, text="Next turn", command=self.gui.reset_turn)
+            next_button.grid(row=1,column=3)
+            # self.gui.reset_turn()
+            self.rolls = 0 # poista tää kun monta pelaajaa?
+            # self.hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 
-    def give_possible_hands(self):
-        hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-        
+
+    def give_possible_hands(self):  
         # tsekkaa 1-6 osumat
         for n in range (6):
             if count(self.hand, n+1) >= 1:
                 if n == 0:
-                    hands[n] = summa(self.hand, n+1)
-                    label = tkinter.Label(window, text=hands[n]).grid(row=4,column=1)
-                    self.gui.update_possible_hand(label, 0)
+                    self.hands[n] = summa(self.hand, n+1)
+                    self.gui.update_possible_hand(self.hands[n], 0)
                 if n == 1:
-                    hands[n] = summa(self.hand, n+1)                  
-                    label = tkinter.Label(window, text=hands[n]).grid(row=5,column=1)
-                    self.gui.update_possible_hand(label, 1)                    
+                    self.hands[n] = summa(self.hand, n+1)                  
+                    self.gui.update_possible_hand(self.hands[n], 1)                    
                 if n == 2:
-                    hands[n] = summa(self.hand, n+1)
-                    label = tkinter.Label(window, text=hands[n]).grid(row=6,column=1)
-                    self.gui.update_possible_hand(label, 2)                    
+                    self.hands[n] = summa(self.hand, n+1)
+                    self.gui.update_possible_hand(self.hands[n], 2)                    
                 if n == 3:
-                    hands[n] = summa(self.hand, n+1)
-                    label = tkinter.Label(window, text=hands[n]).grid(row=7,column=1)
-                    self.gui.update_possible_hand(label, 3)                    
+                    self.hands[n] = summa(self.hand, n+1)
+                    self.gui.update_possible_hand(self.hands[n], 3)                    
                 if n == 4:
-                    hands[n] = summa(self.hand, n+1)
-                    label = tkinter.Label(window, text=hands[n]).grid(row=8,column=1)
-                    self.gui.update_possible_hand(label, 4)                    
+                    self.hands[n] = summa(self.hand, n+1)
+                    self.gui.update_possible_hand(self.hands[n], 4)                    
                 if n == 5:
-                    hands[n] = summa(self.hand, n+1)
-                    label = tkinter.Label(window, text=hands[n]).grid(row=9,column=1)
-                    self.gui.update_possible_hand(label, 5)                    
+                    self.hands[n] = summa(self.hand, n+1)
+                    self.gui.update_possible_hand(self.hands[n], 5)                    
 
         # pari
         max_pts = 0
@@ -240,9 +244,8 @@ class Turn:
                 if max_pts < summa(self.hand, n+1):
                     max_pts = summa(self.hand, n+1)
         if max_pts > 0:
-            hands[6] = max_pts
-            label = tkinter.Label(window, text=max_pts).grid(row=10,column=1)
-            self.gui.update_possible_hand(label, 6)            
+            self.hands[6] = max_pts
+            self.gui.update_possible_hand(self.hands[6], 6)            
             max_pts = 0
             
         # kolmoset
@@ -251,9 +254,8 @@ class Turn:
                 if max_pts < summa(self.hand, n+1):
                     max_pts = summa(self.hand, n+1)
         if max_pts > 0:
-            hands[8] = max_pts
-            label = tkinter.Label(window, text=max_pts).grid(row=12,column=1)
-            self.gui.update_possible_hand(label, 8)
+            self.hands[8] = max_pts
+            self.gui.update_possible_hand(self.hands[8], 8)
             max_pts = 0
                        
         # neloset
@@ -262,9 +264,8 @@ class Turn:
                 if max_pts < summa(self.hand, n+1):
                     max_pts = summa(self.hand, n+1)
         if max_pts > 0:
-            hands[9] = max_pts
-            label = tkinter.Label(window, text=max_pts).grid(row=13,column=1)
-            self.gui.update_possible_hand(label, 9)            
+            self.hands[9] = max_pts
+            self.gui.update_possible_hand(self.hands[9], 9)            
             max_pts = 0
         
         # kaksi paria
@@ -277,9 +278,8 @@ class Turn:
                 for x in self.hand:
                     if count(self.hand, x) == 2 or count(self.hand, x) == 4:
                         pts = pts + summa(self.hand, x)
-                hands[7] = pts/2
-                label = tkinter.Label(window, text=pts/2).grid(row=11,column=1)
-                self.gui.update_possible_hand(label, 7)                
+                self.hands[7] = pts/2
+                self.gui.update_possible_hand(self.hands[7], 7)                
         
         # täyskäsi
         laskin = []
@@ -289,38 +289,29 @@ class Turn:
             if count(self.hand, x) == 3:
                 minus = x
         if 3 in laskin and 2 in laskin:
-            hands[7] = sum(self.hand)-minus
-            label = tkinter.Label(window, text=hands[7]).grid(row=11,column=1)
-            self.gui.update_possible_hand(label, 7)            
-            hands[12] = sum(self.hand)
-            t = ("Täyskäsi: ", sum(self.hand))
-            label = tkinter.Label(window, text=t).grid(row=16,column=1)
-            self.gui.update_possible_hand(label, 12)            
+            self.hands[7] = sum(self.hand)-minus
+            self.gui.update_possible_hand(self.hands[7], 7)            
+            self.hands[12] = sum(self.hand)
+            self.gui.update_possible_hand(self.hands[12], 12)            
                   
         # pieni suora
         if sorted(self.hand) == [1,2,3,4,5]:
-            hands[10] = 15
-            label = tkinter.Label(window, text=15).grid(row=14,column=1)
-            self.gui.update_possible_hand(label, 10)            
+            self.hands[10] = 15
+            self.gui.update_possible_hand(self.hands[10], 10)            
         # iso suora
         if sorted(self.hand) == [2,3,4,5,6]:
-            hands[11] = 20
-            label = tkinter.Label(window, text=20).grid(row=15,column=1)
-            self.gui.update_possible_hand(label, 11)            
+            self.hands[11] = 20
+            self.gui.update_possible_hand(self.hands[11], 11)            
             
         # sattuma
-        hands[13] = sum(self.hand)
-        label = tkinter.Label(window, text=hands[13]).grid(row=17,column=1)
-        self.gui.update_possible_hand(label, 13)        
+        self.hands[13] = sum(self.hand)
+        self.gui.update_possible_hand(self.hands[13], 13)        
             
         # yatzy
         for n in range (6):
             if count(self.hand, n+1) == 5:
-                hands[14] = 50
-                label = tkinter.Label(window, text=50).grid(row=18,column=1)
-                self.gui.update_possible_hand(label, 14)          
-                
-        return hands
+                self.hands[14] = 50
+                self.gui.update_possible_hand(self.hands[14], 14)          
             
             
     def test(self):
@@ -338,10 +329,12 @@ if __name__ == "__main__":
     #name = raw_input("Player 1: ")
     window = tkinter.Tk()
     window.title("Yatzy")
-    window.geometry("300x500")
+    window.geometry("500x500")
     window.resizable(0,0)
     gui = GUI()
-    turn = Turn(gui)
-    throw_button = tkinter.Button(window, text="Throw", command=turn.roll)
-    throw_button.grid(row=1,column=2)
+    #turn = Turn(gui)
+    # throw_button = tkinter.Button(window, text="Throw", command=turn.roll)
+    # throw_button.grid(row=1,column=2)
+    game = Game(gui)
+    game.start()
     window.mainloop()
