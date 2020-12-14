@@ -13,15 +13,31 @@ def summa(hand, nro):
 class Player:
     def __init__(self, name):
         self.name = name
+        self.used_hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         self.points = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         
         
-    def add_point(self, hand):
-        self.points[hand] = 1
+    def add_hand(self, hand):
+        self.used_hands[hand] = 1
         
         
-    def check_points(self):
-        return self.points
+    def check_hands(self):
+        return self.used_hands
+    
+    
+    def add_score(self, point, hand):
+        self.points[hand] = point
+        
+        
+    def calculate_points(self):
+        points = 0
+        i = 0
+        for point in self.points:
+            points = points + int(point)
+            if i == 6:
+                if points > 63:
+                    points = points + 50
+        print(points)
 
 
 class GUI:
@@ -31,6 +47,7 @@ class GUI:
         self.next_button = tkinter.Button(window, text="Next turn", command=self.reset_turn, state="disabled")
         self.next_button.grid(row=1,column=0)
         self.player = player
+        self.rounds = 0
 
         self.dices = [tkinter.Label(window, text="").grid(row=2,column=3),
                       tkinter.Label(window, text="").grid(row=2,column=4),
@@ -127,7 +144,7 @@ class GUI:
             i += 1
 
     def update_possible_hand(self, new_hand, nro):
-        if self.player.check_points()[nro] == 0:
+        if self.player.check_hands()[nro] == 0:
             self.vars[nro].set(new_hand)            
         else:
             return
@@ -145,8 +162,11 @@ class GUI:
         i = 0
         for hand in self.hands_vars:
             if hand.get():
+                if self.vars[i].get() == "":
+                    self.vars[i].set(0)
                 self.points[i] = tkinter.Label(window, text=self.vars[i].get()).grid(row=i+4,column=8)
-                self.player.add_point(i)
+                self.player.add_hand(i)
+                self.player.add_score(self.vars[i].get(), i)
                 break
             i += 1
             
@@ -165,12 +185,21 @@ class GUI:
             
             
     def adjust_checboxes(self, hands):
-        used_hands = self.player.check_points()
+        used_hands = self.player.check_hands()
         i = 0
+        buttons_active = 0
         for point in hands:
             if point > 0 and used_hands[i] == 0:
                 self.hbuttons[i].configure(state="normal")                
+                buttons_active += 1
             i += 1
+            
+        if buttons_active == 0:
+            j = 0
+            for hand_not_used in used_hands:
+                if hand_not_used == 0:
+                    self.hbuttons[j].configure(state="normal")                
+                j += 1
 
 
     def reset_turn(self):   
@@ -185,6 +214,10 @@ class GUI:
             self.vars[i].set("")
             i += 1
         self.change_buttons(1)
+        # nää muualle...
+        self.rounds += 1
+        if self.rounds == 15:
+            self.player.calculate_points()
 
 
         
@@ -196,6 +229,7 @@ class Game:
         self.gui = gui
         # self.button = ""
 
+
     def start(self):
         turn = Turn(self.gui)
         self.gui.add_command_to_button(turn)
@@ -206,6 +240,10 @@ class Game:
         # while self.round < 15:
         #     turn = Turn(self.gui)
         #     self.round += 1
+        
+        
+    def next_round(self):
+        self.round += 1
         
 
 class Scores:
@@ -258,7 +296,7 @@ class Turn:
             self.gui.change_buttons(0)
             # self.gui.reset_turn()
             self.rolls = 0 # poista tää kun monta pelaajaa?
-            # self.hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            self.hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 
 
