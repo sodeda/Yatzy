@@ -20,8 +20,8 @@ class Player:
         self.points[hand] = 1
         
         
-    def check_points(self, hand):
-        return self.points[hand]
+    def check_points(self):
+        return self.points
 
 
 class GUI:
@@ -102,21 +102,21 @@ class GUI:
                          tkinter.Checkbutton(window, variable=self.dice_vars[2]),
                          tkinter.Checkbutton(window, variable=self.dice_vars[3]),
                          tkinter.Checkbutton(window, variable=self.dice_vars[4])]    
-        self.hbuttons = [tkinter.Checkbutton(window, variable=self.hands_vars[0]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[1]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[2]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[3]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[4]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[5]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[6]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[7]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[8]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[9]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[10]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[11]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[12]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[13]),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[14])]
+        self.hbuttons = [tkinter.Checkbutton(window, variable=self.hands_vars[0], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[1], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[2], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[3], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[4], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[5], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[6], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[7], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[8], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[9], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[10], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[11], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[12], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[13], state = 'disabled'),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[14], state = 'disabled')]
         i = 0
         for button in self.dbuttons:
             button.grid(row=3, column=3+i)
@@ -127,9 +127,8 @@ class GUI:
             i += 1
 
     def update_possible_hand(self, new_hand, nro):
-        if self.player.check_points(nro) == 0:
-            self.vars[nro].set(new_hand)
-            self.player.add_point(nro)
+        if self.player.check_points()[nro] == 0:
+            self.vars[nro].set(new_hand)            
         else:
             return
         
@@ -147,9 +146,10 @@ class GUI:
         for hand in self.hands_vars:
             if hand.get():
                 self.points[i] = tkinter.Label(window, text=self.vars[i].get()).grid(row=i+4,column=8)
+                self.player.add_point(i)
                 break
             i += 1
-
+            
 
     def add_command_to_button(self, turn):
         self.throw_button.configure(command=turn.roll)
@@ -162,12 +162,22 @@ class GUI:
         else:
             self.throw_button.configure(state="normal")
             self.next_button.configure(state="disabled")
+            
+            
+    def adjust_checboxes(self, hands):
+        used_hands = self.player.check_points()
+        i = 0
+        for point in hands:
+            if point > 0 and used_hands[i] == 0:
+                self.hbuttons[i].configure(state="normal")                
+            i += 1
 
 
     def reset_turn(self):   
         self.add_score()
         for box in self.hbuttons:
             box.deselect()
+            box.configure(state="disabled")
         for box in self.dbuttons:
             box.deselect()
         i = 0
@@ -244,6 +254,7 @@ class Turn:
 
         else:
             self.give_possible_hands()
+            self.gui.adjust_checboxes(self.hands)
             self.gui.change_buttons(0)
             # self.gui.reset_turn()
             self.rolls = 0 # poista tää kun monta pelaajaa?
@@ -353,7 +364,9 @@ class Turn:
             
     def test(self):
         #print(self.vars[0].get())
-        print(self.hand)
+        #print(self.hand)
+        for i in self.hands:
+            print (i)
         #pass
 
 
