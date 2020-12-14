@@ -13,20 +13,30 @@ def summa(hand, nro):
 class Player:
     def __init__(self, name):
         self.name = name
+        self.points = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        
+        
+    def add_point(self, hand):
+        self.points[hand] = 1
+        
+        
+    def check_points(self, hand):
+        return self.points[hand]
 
 
 class GUI:
-    def __init__(self):
+    def __init__(self, player):
         self.throw_button = tkinter.Button(window, text="Throw")
-        self.throw_button.grid(row=1,column=2)
+        self.throw_button.grid(row=1,column=1)
         self.next_button = tkinter.Button(window, text="Next turn", command=self.reset_turn, state="disabled")
-        self.next_button.grid(row=1,column=3)
+        self.next_button.grid(row=1,column=0)
+        self.player = player
 
-        self.dices = [tkinter.Label(window, text="").grid(row=2,column=2),
-                      tkinter.Label(window, text="").grid(row=2,column=3),
+        self.dices = [tkinter.Label(window, text="").grid(row=2,column=3),
                       tkinter.Label(window, text="").grid(row=2,column=4),
                       tkinter.Label(window, text="").grid(row=2,column=5),
-                      tkinter.Label(window, text="").grid(row=2,column=6)]
+                      tkinter.Label(window, text="").grid(row=2,column=6),
+                      tkinter.Label(window, text="").grid(row=2,column=7)]
         
         self.hand_names = [tkinter.Label(window, text="Ykköset: ").grid(row=4,column=0),
                            tkinter.Label(window, text="Kakkoset: ").grid(row=5,column=0),
@@ -109,7 +119,7 @@ class GUI:
                          tkinter.Checkbutton(window, variable=self.hands_vars[14])]
         i = 0
         for button in self.dbuttons:
-            button.grid(row=3, column=2+i)
+            button.grid(row=3, column=3+i)
             i += 1
         i = 0
         for button in self.hbuttons:
@@ -117,7 +127,11 @@ class GUI:
             i += 1
 
     def update_possible_hand(self, new_hand, nro):
-        self.vars[nro].set(new_hand)
+        if self.player.check_points(nro) == 0:
+            self.vars[nro].set(new_hand)
+            self.player.add_point(nro)
+        else:
+            return
         
 
     def update_dice(self, nro):
@@ -132,7 +146,7 @@ class GUI:
         i = 0
         for hand in self.hands_vars:
             if hand.get():
-                self.points[i] = tkinter.Label(window, text=self.vars[i].get()).grid(row=i+4,column=7)
+                self.points[i] = tkinter.Label(window, text=self.vars[i].get()).grid(row=i+4,column=8)
                 break
             i += 1
 
@@ -202,28 +216,28 @@ class Turn:
                 nro = randint(1,6)
                 #nro = 3
                 self.hand[0] = nro
-                nro = tkinter.Label(window, text=nro).grid(row=2,column=2)
+                nro = tkinter.Label(window, text=nro).grid(row=2,column=3)
                 self.gui.update_dice(nro)
             if not self.gui.get_dices(1):
                 nro = randint(1,6)
                # nro = 2
                 self.hand[1] = nro
-                nro = tkinter.Label(window, text=nro).grid(row=2,column=3)
+                nro = tkinter.Label(window, text=nro).grid(row=2,column=4)
             if not self.gui.get_dices(2):
                 nro = randint(1,6)
                 #nro = 1
                 self.hand[2] = nro
-                nro = tkinter.Label(window, text=nro).grid(row=2,column=4)
+                nro = tkinter.Label(window, text=nro).grid(row=2,column=5)
             if not self.gui.get_dices(3):
                 nro = randint(1,6)
                 #nro = 4
                 self.hand[3] = nro
-                nro = tkinter.Label(window, text=nro).grid(row=2,column=5)                
+                nro = tkinter.Label(window, text=nro).grid(row=2,column=6)                
             if not self.gui.get_dices(4):
                 nro = randint(1,6)
                 #nro = 5
                 self.hand[4] = nro
-                nro = tkinter.Label(window, text=nro).grid(row=2,column=6)
+                nro = tkinter.Label(window, text=nro).grid(row=2,column=7)
 
 
             self.rolls += 1
@@ -354,7 +368,8 @@ if __name__ == "__main__":
     window.title("Yatzy")
     window.geometry("500x500")
     window.resizable(0,0)
-    gui = GUI()
+    player = Player("daniel")
+    gui = GUI(player)
     #turn = Turn(gui)
     # throw_button = tkinter.Button(window, text="Throw", command=turn.roll)
     # throw_button.grid(row=1,column=2)
