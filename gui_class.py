@@ -16,32 +16,6 @@ class GUI:
         self.next_button.grid(row=1,column=0)
         self.players = players
         self.set_players(players)
-        # self.player_vars = [tkinter.StringVar(), tkinter.StringVar()]
-        # self.players = [tkinter.Label(self.window, text=self.player_vars[0].get()).grid(row=2,column=10),
-        #               tkinter.Label(self.window, text=self.player_vars[1].get()).grid(row=2,column=12)]
-        # i = 0
-        # for player in self.player_vars:
-        #     self.player_vars[i].set("")
-        #     i += 1
-
-        # i = 0
-        # for player in players:
-        #     self.points = [tkinter.Label(self.window, text="").grid(row=4,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=5,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=6,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=7,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=8,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=9,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=10,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=11,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=12,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=13,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=14,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=15,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=16,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=17,column=10+i),
-        #                    tkinter.Label(self.window, text="").grid(row=18,column=10+i)]
-        #     i += 1
 
         self.dices = [tkinter.Label(window, text="").grid(row=2,column=3),
                       tkinter.Label(window, text="").grid(row=2,column=4),
@@ -148,7 +122,7 @@ class GUI:
                            tkinter.Label(self.window, text="").grid(row=16,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=17,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=18,column=10+i)]
-            i += 1
+            i += 2
 
 
     def add_game_logic(self, game):
@@ -182,7 +156,7 @@ class GUI:
             if hand.get():
                 if self.vars[i].get() == "":
                     self.vars[i].set(0)
-                self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+4,column=8)
+                self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+4,column=10+ind)
                 self.players[ind].add_hand(i)
                 self.players[ind].add_score(self.vars[i].get(), i)
                 break
@@ -241,3 +215,4 @@ class GUI:
             self.vars[i].set("")
             i += 1
         self.change_buttons(1)
+        self.game.next_round()

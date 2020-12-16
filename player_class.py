@@ -33,7 +33,7 @@ class Player:
         points = 0
         i = 0
         for point in self.points:
-            points = points + int(point)
+            points = points + float(point)
             if i == 6:
                 if points > 63:
                     points = points + 50

@@ -35,12 +35,12 @@ class Game:
         
     def next_round(self):
         self.round += 1
-        if self.round == 15:
+        if self.round == 15*len(self.players):
             self.end()
-        if turn_ind == sizeof(self.players):
-            turn_ind = 0
+        if self.turn_ind == len(self.players)-1:
+            self.turn_ind = 0
         else:
-            turn_ind += 1
+            self.turn_ind += 1
         
         
     def end(self):
