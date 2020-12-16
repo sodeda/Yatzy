@@ -12,7 +12,6 @@ import game_class
 
 
 if __name__ == "__main__":
-    #name = raw_input("Player 1: ")
     window = tkinter.Tk()
     window.title("Yatzy")
     window.geometry("500x500")
@@ -22,16 +21,28 @@ if __name__ == "__main__":
     players = []
     i = 0
     while i<2:
-        name = tkinter.simpledialog.askstring("Input", "Player 1 name?", parent=window)
+        nro = i+1
+        text = "Player "+ str(nro) +" name?"
+        name = tkinter.simpledialog.askstring("Input", text, parent=window)
         player = player_class.Player(name)
         players.append(player)
         i += 1
     
-    #player = Player("daniel")
-    gui = gui_class.GUI(window, player)
+    gui = gui_class.GUI(window, players)
     #turn = Turn(gui)
-    # throw_button = tkinter.Button(window, text="Throw", command=turn.roll)
-    # throw_button.grid(row=1,column=2)
     game = game_class.Game(gui, players)
+    gui.add_game_logic(game)
     game.start()
+
+    """
+    pelaaja alustus
+    gui alustus
+    game alustus
+    game start
+        turn
+        turn = 3 -> seuraava pelaaja
+        rounds = 15 -> game end
+    pistelasku
+    """
+    
     window.mainloop()

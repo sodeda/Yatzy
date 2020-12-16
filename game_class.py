@@ -5,6 +5,7 @@ Created on Wed Dec 16 15:46:34 2020
 @author: soderdahl
 """
 
+
 import tkinter
 from random import randint
 
@@ -21,6 +22,7 @@ class Game:
     def __init__(self, gui, players):
         self.round = 0
         self.players = players
+        self.turn_ind = 0
         self.gui = gui
         # self.button = ""
 
@@ -30,24 +32,24 @@ class Game:
         self.gui.add_command_to_button(turn)
         self.gui.add_players(self.players)
         
-        # self.button = tkinter.Button(window, text="Throw", command=turn.roll)
-        # self.button.grid(row=1,column=2)
-        #self.gui.reset_turn()
-        # self.round += 1
-        # while self.round < 15:
-        #     turn = Turn(self.gui)
-        #     self.round += 1
-        
         
     def next_round(self):
         self.round += 1
         if self.round == 15:
             self.end()
+        if turn_ind == sizeof(self.players):
+            turn_ind = 0
+        else:
+            turn_ind += 1
         
         
     def end(self):
         for player in self.players:
             player.calculate_points()
+            
+            
+    def get_player_num(self):
+        return self.turn_ind
         
 
 class Scores:
