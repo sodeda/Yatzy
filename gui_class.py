@@ -98,12 +98,16 @@ class GUI:
     def set_players(self, players):
         # tähän looppi riippuen kuinka monta pelaajaa
         self.player_vars = [tkinter.StringVar(), tkinter.StringVar()]
-        self.players_names = [tkinter.Label(self.window, text=self.player_vars[0].get()).grid(row=2,column=10),
-                              tkinter.Label(self.window, text=self.player_vars[1].get()).grid(row=2,column=12)]
+        self.point_vars = [tkinter.StringVar(), tkinter.StringVar()]
         i = 0
         for player in self.player_vars:
             self.player_vars[i].set("")
+            self.point_vars[i].set("")
             i += 1
+        self.players_names = [tkinter.Label(self.window, text=self.player_vars[0].get()).grid(row=2,column=10),
+                              tkinter.Label(self.window, text=self.player_vars[1].get()).grid(row=2,column=12)]
+        self.point_labels = [tkinter.Label(self.window, text=self.point_vars[0].get()).grid(row=19,column=10),
+                              tkinter.Label(self.window, text=self.point_vars[1].get()).grid(row=19,column=12)]
 
         i = 0
         for player in self.players_names:
@@ -137,11 +141,14 @@ class GUI:
             return
         
 
+    # käytetääks tätä?
     def update_dice(self, nro):
         self.dices[0] = nro
 
         
     def get_dices(self, nro):
+        for box in self.dbuttons:
+            box.configure(state="normal")
         return self.dice_vars[nro].get()
     
     
@@ -159,6 +166,9 @@ class GUI:
                 self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+4,column=10+ind)
                 self.players[ind].add_hand(i)
                 self.players[ind].add_score(self.vars[i].get(), i)
+                self.point_vars[ind].set(self.players[ind].calculate_points())
+                self.point_labels[ind] = tkinter.Label(self.window, 
+                                                       text=self.point_vars[ind].get()).grid(row=19,column=10+ind+ind)
                 break
             i += 1
             
@@ -210,6 +220,7 @@ class GUI:
             box.configure(state="disabled")
         for box in self.dbuttons:
             box.deselect()
+            box.configure(state="disabled")
         i = 0
         for button in self.vars:
             self.vars[i].set("")

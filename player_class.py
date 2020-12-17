@@ -30,11 +30,13 @@ class Player:
         
         
     def calculate_points(self):
-        points = 0
+        points = 50
         i = 0
         for point in self.points:
             points = points + float(point)
             if i == 6:
                 if points > 63:
                     points = points + 50
-        print(points)
+            i += 1
+
+        return int(points)

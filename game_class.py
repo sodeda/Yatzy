@@ -71,20 +71,20 @@ class Turn:
                 #nro = 3
                 self.hand[0] = nro
                 nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=3)
-                self.gui.update_dice(nro)
+                #self.gui.update_dice(nro)
             if not self.gui.get_dices(1):
                 nro = randint(1,6)
-               # nro = 2
+                #nro = 3
                 self.hand[1] = nro
                 nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=4)
             if not self.gui.get_dices(2):
                 nro = randint(1,6)
-                #nro = 1
+                #nro = 5
                 self.hand[2] = nro
                 nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=5)
             if not self.gui.get_dices(3):
                 nro = randint(1,6)
-                #nro = 4
+                #nro = 5
                 self.hand[3] = nro
                 nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=6)                
             if not self.gui.get_dices(4):
@@ -100,7 +100,6 @@ class Turn:
             self.give_possible_hands()
             self.gui.adjust_checboxes(self.hands)
             self.gui.change_buttons(0)
-            # self.gui.reset_turn()
             self.rolls = 0 # poista tää kun monta pelaajaa?
             self.hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
@@ -133,8 +132,9 @@ class Turn:
         max_pts = 0
         for n in range (6):
             if count(self.hand, n+1) >= 2:
-                if max_pts < summa(self.hand, n+1):
-                    max_pts = summa(self.hand, n+1)
+                pts = 2*(n+1)
+                if max_pts < pts:
+                    max_pts = pts
         if max_pts > 0:
             self.hands[6] = max_pts
             self.gui.update_possible_hand(self.hands[6], 6)            
@@ -143,8 +143,8 @@ class Turn:
         # kolmoset
         for n in range (6):
             if count(self.hand, n+1) >= 3:
-                if max_pts < summa(self.hand, n+1):
-                    max_pts = summa(self.hand, n+1)
+                if max_pts < 3*(n+1):
+                    max_pts = 3*(n+1)
         if max_pts > 0:
             self.hands[8] = max_pts
             self.gui.update_possible_hand(self.hands[8], 8)
@@ -168,9 +168,12 @@ class Turn:
             if count(laskin, x) == 4 or x == 4:
                 pts = 0
                 for x in self.hand:
-                    if count(self.hand, x) == 2 or count(self.hand, x) == 4:
+                    if count(self.hand, x) == 2:
                         pts = pts + summa(self.hand, x)
-                self.hands[7] = pts/2
+                        self.hands[7] = int(pts/2)
+                    elif count(self.hand, x) == 4:
+                        pts = pts + summa(self.hand, x)
+                        self.hands[7] = int(pts/4)                        
                 self.gui.update_possible_hand(self.hands[7], 7)                
         
         # täyskäsi
