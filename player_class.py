@@ -29,14 +29,30 @@ class Player:
         self.points[hand] = point
         
         
+    def check_bonus(self):
+        bonus = self.points[0:6]
+        bonus_pts = 0
+        for pts in bonus:
+            bonus_pts += int(pts)
+        if bonus_pts >= 63:
+            return True
+        else:
+            return False
+        
+        
+    def calculate_mid_points(self):
+        points = 0
+        for point in self.points[0:6]:
+            points = points + float(point)
+
+        return int(points)
+    
+    
     def calculate_points(self):
-        points = 50
-        i = 0
+        points = 0
         for point in self.points:
             points = points + float(point)
-            if i == 6:
-                if points > 63:
-                    points = points + 50
-            i += 1
+        if self.check_bonus():
+            points += 50
 
         return int(points)

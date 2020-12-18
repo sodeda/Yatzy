@@ -7,6 +7,7 @@ Created on Wed Dec 16 15:46:23 2020
 
 import tkinter
 
+
 class GUI:
     def __init__(self, window, players):
         self.window = window
@@ -23,21 +24,26 @@ class GUI:
                       tkinter.Label(window, text="").grid(row=2,column=6),
                       tkinter.Label(window, text="").grid(row=2,column=7)]
         
-        self.hand_names = [tkinter.Label(window, text="Ykköset: ").grid(row=4,column=0),
+        self.turn = tkinter.StringVar()
+        self.hand_names = [tkinter.Label(window, text=self.turn.get()).grid(row=3,column=0),
+                           tkinter.Label(window, text="Ykköset: ").grid(row=4,column=0),
                            tkinter.Label(window, text="Kakkoset: ").grid(row=5,column=0),
                            tkinter.Label(window, text="Kolmoset: ").grid(row=6,column=0),
                            tkinter.Label(window, text="Neloset: ").grid(row=7,column=0),
                            tkinter.Label(window, text="Vitoset: ").grid(row=8,column=0),
                            tkinter.Label(window, text="Kutoset: ").grid(row=9,column=0),
-                           tkinter.Label(window, text="Pari: ").grid(row=10,column=0),
-                           tkinter.Label(window, text="Kaksi paria: ").grid(row=11,column=0),
-                           tkinter.Label(window, text="Kolme samaa: ").grid(row=12,column=0),
-                           tkinter.Label(window, text="Neljä samaa: ").grid(row=13,column=0),
-                           tkinter.Label(window, text="Pieni suora: ").grid(row=14,column=0),
-                           tkinter.Label(window, text="Iso suora: ").grid(row=15,column=0),
-                           tkinter.Label(window, text="Täyskäsi: ").grid(row=16,column=0),
-                           tkinter.Label(window, text="Sattuma: ").grid(row=17,column=0),
-                           tkinter.Label(window, text="YATZY: ").grid(row=18,column=0)]
+                           tkinter.Label(window, text="YHTEENSÄ: ").grid(row=10,column=0),
+                           tkinter.Label(window, text="BONUS").grid(row=11,column=0),
+                           tkinter.Label(window, text="Pari: ").grid(row=12,column=0),
+                           tkinter.Label(window, text="Kaksi paria: ").grid(row=13,column=0),
+                           tkinter.Label(window, text="Kolme samaa: ").grid(row=14,column=0),
+                           tkinter.Label(window, text="Neljä samaa: ").grid(row=15,column=0),
+                           tkinter.Label(window, text="Pieni suora: ").grid(row=16,column=0),
+                           tkinter.Label(window, text="Iso suora: ").grid(row=17,column=0),
+                           tkinter.Label(window, text="Täyskäsi: ").grid(row=18,column=0),
+                           tkinter.Label(window, text="Sattuma: ").grid(row=19,column=0),
+                           tkinter.Label(window, text="YATZY: ").grid(row=20,column=0),
+                           tkinter.Label(window, text="YHTEENSÄ: ").grid(row=21,column=0)]
         
         self.vars = [tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),
                      tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),
@@ -48,15 +54,15 @@ class GUI:
                       tkinter.Label(window, textvariable=self.vars[3]).grid(row=7,column=1),
                       tkinter.Label(window, textvariable=self.vars[4]).grid(row=8,column=1),
                       tkinter.Label(window, textvariable=self.vars[5]).grid(row=9,column=1),
-                      tkinter.Label(window, textvariable=self.vars[6]).grid(row=10,column=1),
-                      tkinter.Label(window, textvariable=self.vars[7]).grid(row=11,column=1),
-                      tkinter.Label(window, textvariable=self.vars[8]).grid(row=12,column=1),
-                      tkinter.Label(window, textvariable=self.vars[9]).grid(row=13,column=1),
-                      tkinter.Label(window, textvariable=self.vars[10]).grid(row=14,column=1),
-                      tkinter.Label(window, textvariable=self.vars[11]).grid(row=15,column=1),
-                      tkinter.Label(window, textvariable=self.vars[12]).grid(row=16,column=1),
-                      tkinter.Label(window, textvariable=self.vars[13]).grid(row=17,column=1),
-                      tkinter.Label(window, textvariable=self.vars[14]).grid(row=18,column=1)]
+                      tkinter.Label(window, textvariable=self.vars[6]).grid(row=12,column=1),
+                      tkinter.Label(window, textvariable=self.vars[7]).grid(row=13,column=1),
+                      tkinter.Label(window, textvariable=self.vars[8]).grid(row=14,column=1),
+                      tkinter.Label(window, textvariable=self.vars[9]).grid(row=15,column=1),
+                      tkinter.Label(window, textvariable=self.vars[10]).grid(row=16,column=1),
+                      tkinter.Label(window, textvariable=self.vars[11]).grid(row=17,column=1),
+                      tkinter.Label(window, textvariable=self.vars[12]).grid(row=18,column=1),
+                      tkinter.Label(window, textvariable=self.vars[13]).grid(row=19,column=1),
+                      tkinter.Label(window, textvariable=self.vars[14]).grid(row=20,column=1)]
         i = 0
         for button in self.vars:
             self.vars[i].set("")
@@ -92,23 +98,34 @@ class GUI:
             i += 1
         i = 0
         for button in self.hbuttons:
-            button.grid(row=i+4, column=2)
+            if i <= 5:
+                button.grid(row=i+4, column=2)
+            else:
+                button.grid(row=i+6, column=2)
             i += 1
 
     def set_players(self, players):
         # tähän looppi riippuen kuinka monta pelaajaa
         self.player_vars = [tkinter.StringVar(), tkinter.StringVar()]
         self.point_vars = [tkinter.StringVar(), tkinter.StringVar()]
+        self.bonus_vars = [tkinter.StringVar(), tkinter.StringVar()]
+        self.point_vars2 = [tkinter.StringVar(), tkinter.StringVar()]
         i = 0
         for player in self.player_vars:
             self.player_vars[i].set("")
             self.point_vars[i].set("")
+            self.bonus_vars[i].set("")
+            self.point_vars2[i].set("")
             i += 1
         self.players_names = [tkinter.Label(self.window, text=self.player_vars[0].get()).grid(row=2,column=10),
                               tkinter.Label(self.window, text=self.player_vars[1].get()).grid(row=2,column=12)]
-        self.point_labels = [tkinter.Label(self.window, text=self.point_vars[0].get()).grid(row=19,column=10),
-                              tkinter.Label(self.window, text=self.point_vars[1].get()).grid(row=19,column=12)]
-
+        self.point_labels = [tkinter.Label(self.window, text=self.point_vars[0].get()).grid(row=10,column=10),
+                              tkinter.Label(self.window, text=self.point_vars[1].get()).grid(row=10,column=12)]
+        self.bonus = [tkinter.Label(self.window, text=self.bonus_vars[0].get()).grid(row=11,column=10),
+                      tkinter.Label(self.window, text=self.bonus_vars[1].get()).grid(row=11,column=12)]
+        self.point_labels2 = [tkinter.Label(self.window, text=self.point_vars2[0].get()).grid(row=21,column=10),
+                              tkinter.Label(self.window, text=self.point_vars2[1].get()).grid(row=21,column=12)]
+        
         i = 0
         for player in self.players_names:
             self.points = [tkinter.Label(self.window, text="").grid(row=4,column=10+i),
@@ -117,7 +134,6 @@ class GUI:
                            tkinter.Label(self.window, text="").grid(row=7,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=8,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=9,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=10,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=11,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=12,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=13,column=10+i),
@@ -125,12 +141,18 @@ class GUI:
                            tkinter.Label(self.window, text="").grid(row=15,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=16,column=10+i),
                            tkinter.Label(self.window, text="").grid(row=17,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=18,column=10+i)]
+                           tkinter.Label(self.window, text="").grid(row=18,column=10+i),
+                           tkinter.Label(self.window, text="").grid(row=19,column=10+i),
+                           tkinter.Label(self.window, text="").grid(row=20,column=10+i),
+                           tkinter.Label(self.window, text="").grid(row=21,column=10+i)]
             i += 2
 
 
     def add_game_logic(self, game):
         self.game = game
+        self.turn.set(self.game.get_player_num())
+        name = self.players[int(self.turn.get())].get_name()
+        self.hand_names[0] = tkinter.Label(self.window, text=name).grid(row=3,column=0)
 
 
     def update_possible_hand(self, new_hand, nro):
@@ -163,15 +185,28 @@ class GUI:
             if hand.get():
                 if self.vars[i].get() == "":
                     self.vars[i].set(0)
-                self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+4,column=10+ind)
+                if i <= 5:
+                    self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+4,column=10+ind)
+                else:
+                    self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+6,column=10+ind)
+                    
                 self.players[ind].add_hand(i)
                 self.players[ind].add_score(self.vars[i].get(), i)
-                self.point_vars[ind].set(self.players[ind].calculate_points())
+ 
+                self.point_vars[ind].set(self.players[ind].calculate_mid_points())
                 self.point_labels[ind] = tkinter.Label(self.window, 
-                                                       text=self.point_vars[ind].get()).grid(row=19,column=10+ind+ind)
+                                                       text=self.point_vars[ind].get()).grid(row=10,column=10+ind)     
+                self.point_vars2[ind].set(self.players[ind].calculate_points())
+                self.point_labels2[ind] = tkinter.Label(self.window, 
+                                                       text=self.point_vars2[ind].get()).grid(row=21,column=10+ind)
+                
+                if self.players[ind].check_bonus():
+                    self.bonus_vars[ind].set("50")
+                    self.bonus[ind] = tkinter.Label(self.window, 
+                                                       text=self.bonus_vars[ind].get()).grid(row=11,column=10+ind)  
                 break
             i += 1
-            
+
 
     def add_command_to_button(self, turn):
         self.throw_button.configure(command=turn.roll)
@@ -227,3 +262,6 @@ class GUI:
             i += 1
         self.change_buttons(1)
         self.game.next_round()
+        self.turn.set(self.game.get_player_num())
+        name = self.players[int(self.turn.get())].get_name()
+        self.hand_names[0] = tkinter.Label(self.window, text=name).grid(row=3,column=0)

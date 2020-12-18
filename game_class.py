@@ -65,38 +65,37 @@ class Turn:
         self.gui = gui
 
     def roll(self):
-        if self.rolls < 2:
-            if not self.gui.get_dices(0):
-                nro = randint(1,6)
-                #nro = 3
-                self.hand[0] = nro
-                nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=3)
-                #self.gui.update_dice(nro)
-            if not self.gui.get_dices(1):
-                nro = randint(1,6)
-                #nro = 3
-                self.hand[1] = nro
-                nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=4)
-            if not self.gui.get_dices(2):
-                nro = randint(1,6)
-                #nro = 5
-                self.hand[2] = nro
-                nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=5)
-            if not self.gui.get_dices(3):
-                nro = randint(1,6)
-                #nro = 5
-                self.hand[3] = nro
-                nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=6)                
-            if not self.gui.get_dices(4):
-                nro = randint(1,6)
-                #nro = 5
-                self.hand[4] = nro
-                nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=7)
+        if not self.gui.get_dices(0):
+            nro = randint(1,6)
+            #nro = 3
+            self.hand[0] = nro
+            nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=3)
+            #self.gui.update_dice(nro)
+        if not self.gui.get_dices(1):
+            nro = randint(1,6)
+            #nro = 3
+            self.hand[1] = nro
+            nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=4)
+        if not self.gui.get_dices(2):
+            nro = randint(1,6)
+            #nro = 5
+            self.hand[2] = nro
+            nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=5)
+        if not self.gui.get_dices(3):
+            nro = randint(1,6)
+            #nro = 5
+            self.hand[3] = nro
+            nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=6)                
+        if not self.gui.get_dices(4):
+            nro = randint(1,6)
+            #nro = 5
+            self.hand[4] = nro
+            nro = tkinter.Label(self.gui.get_window(), text=nro).grid(row=2,column=7)
 
 
-            self.rolls += 1
+        self.rolls += 1
 
-        else:
+        if self.rolls == 3:
             self.give_possible_hands()
             self.gui.adjust_checboxes(self.hands)
             self.gui.change_buttons(0)

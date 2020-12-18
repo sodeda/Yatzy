@@ -14,8 +14,10 @@ import game_class
 if __name__ == "__main__":
     window = tkinter.Tk()
     window.title("Yatzy")
-    window.geometry("500x500")
+    window.geometry("500x550")
     window.resizable(0,0)
+    window.lift()
+    window.attributes("-topmost", True)
     
     # parempi looppi!
     players = []
@@ -33,16 +35,5 @@ if __name__ == "__main__":
     game = game_class.Game(gui, players)
     gui.add_game_logic(game)
     game.start()
-
-    """
-    pelaaja alustus
-    gui alustus
-    game alustus
-    game start
-        turn
-        turn = 3 -> seuraava pelaaja
-        rounds = 15 -> game end
-    pistelasku
-    """
     
     window.mainloop()
