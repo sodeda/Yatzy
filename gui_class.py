@@ -6,6 +6,7 @@ Created on Wed Dec 16 15:46:23 2020
 """
 
 import tkinter
+import tkinter.ttk
 
 
 class GUI:
@@ -26,43 +27,43 @@ class GUI:
         
         self.turn = tkinter.StringVar()
         self.hand_names = [tkinter.Label(window, text=self.turn.get()).grid(row=3,column=0),
-                           tkinter.Label(window, text="Ykköset: ").grid(row=4,column=0),
-                           tkinter.Label(window, text="Kakkoset: ").grid(row=5,column=0),
-                           tkinter.Label(window, text="Kolmoset: ").grid(row=6,column=0),
-                           tkinter.Label(window, text="Neloset: ").grid(row=7,column=0),
-                           tkinter.Label(window, text="Vitoset: ").grid(row=8,column=0),
-                           tkinter.Label(window, text="Kutoset: ").grid(row=9,column=0),
-                           tkinter.Label(window, text="YHTEENSÄ: ").grid(row=10,column=0),
-                           tkinter.Label(window, text="BONUS").grid(row=11,column=0),
-                           tkinter.Label(window, text="Pari: ").grid(row=12,column=0),
-                           tkinter.Label(window, text="Kaksi paria: ").grid(row=13,column=0),
-                           tkinter.Label(window, text="Kolme samaa: ").grid(row=14,column=0),
-                           tkinter.Label(window, text="Neljä samaa: ").grid(row=15,column=0),
-                           tkinter.Label(window, text="Pieni suora: ").grid(row=16,column=0),
-                           tkinter.Label(window, text="Iso suora: ").grid(row=17,column=0),
-                           tkinter.Label(window, text="Täyskäsi: ").grid(row=18,column=0),
-                           tkinter.Label(window, text="Sattuma: ").grid(row=19,column=0),
-                           tkinter.Label(window, text="YATZY: ").grid(row=20,column=0),
-                           tkinter.Label(window, text="YHTEENSÄ: ").grid(row=21,column=0)]
+                           tkinter.Label(window, text="Ykköset: ").grid(row=4,column=0,sticky='w'),
+                           tkinter.Label(window, text="Kakkoset: ").grid(row=6,column=0,sticky='w'),
+                           tkinter.Label(window, text="Kolmoset: ").grid(row=8,column=0,sticky='w'),
+                           tkinter.Label(window, text="Neloset: ").grid(row=10,column=0,sticky='w'),
+                           tkinter.Label(window, text="Vitoset: ").grid(row=12,column=0,sticky='w'),
+                           tkinter.Label(window, text="Kutoset: ").grid(row=14,column=0,sticky='w'),
+                           tkinter.Label(window, text="YHTEENSÄ: ", font=('Helvetica',10,'bold')).grid(row=16,column=0,sticky='w'),
+                           tkinter.Label(window, text="BONUS", fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=0,sticky='w'),
+                           tkinter.Label(window, text="Pari: ").grid(row=20,column=0,sticky='w'),
+                           tkinter.Label(window, text="Kaksi paria: ").grid(row=22,column=0,sticky='w'),
+                           tkinter.Label(window, text="Kolme samaa: ").grid(row=24,column=0,sticky='w'),
+                           tkinter.Label(window, text="Neljä samaa: ").grid(row=26,column=0,sticky='w'),
+                           tkinter.Label(window, text="Pieni suora: ").grid(row=28,column=0,sticky='w'),
+                           tkinter.Label(window, text="Iso suora: ").grid(row=30,column=0,sticky='w'),
+                           tkinter.Label(window, text="Täyskäsi: ").grid(row=32,column=0,sticky='w'),
+                           tkinter.Label(window, text="Sattuma: ").grid(row=34,column=0,sticky='w'),
+                           tkinter.Label(window, text="YATZY: ").grid(row=36,column=0,sticky='w'),
+                           tkinter.Label(window, text="YHTEENSÄ: ", font=('Helvetica',10,'bold')).grid(row=38,column=0,sticky='w')]
         
         self.vars = [tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),
                      tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),
                      tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar(),tkinter.StringVar()]
         self.hands = [tkinter.Label(window, textvariable=self.vars[0]).grid(row=4,column=1),
-                      tkinter.Label(window, textvariable=self.vars[1]).grid(row=5,column=1),
-                      tkinter.Label(window, textvariable=self.vars[2]).grid(row=6,column=1),
-                      tkinter.Label(window, textvariable=self.vars[3]).grid(row=7,column=1),
-                      tkinter.Label(window, textvariable=self.vars[4]).grid(row=8,column=1),
-                      tkinter.Label(window, textvariable=self.vars[5]).grid(row=9,column=1),
-                      tkinter.Label(window, textvariable=self.vars[6]).grid(row=12,column=1),
-                      tkinter.Label(window, textvariable=self.vars[7]).grid(row=13,column=1),
-                      tkinter.Label(window, textvariable=self.vars[8]).grid(row=14,column=1),
-                      tkinter.Label(window, textvariable=self.vars[9]).grid(row=15,column=1),
-                      tkinter.Label(window, textvariable=self.vars[10]).grid(row=16,column=1),
-                      tkinter.Label(window, textvariable=self.vars[11]).grid(row=17,column=1),
-                      tkinter.Label(window, textvariable=self.vars[12]).grid(row=18,column=1),
-                      tkinter.Label(window, textvariable=self.vars[13]).grid(row=19,column=1),
-                      tkinter.Label(window, textvariable=self.vars[14]).grid(row=20,column=1)]
+                      tkinter.Label(window, textvariable=self.vars[1]).grid(row=6,column=1),
+                      tkinter.Label(window, textvariable=self.vars[2]).grid(row=8,column=1),
+                      tkinter.Label(window, textvariable=self.vars[3]).grid(row=10,column=1),
+                      tkinter.Label(window, textvariable=self.vars[4]).grid(row=12,column=1),
+                      tkinter.Label(window, textvariable=self.vars[5]).grid(row=14,column=1),
+                      tkinter.Label(window, textvariable=self.vars[6]).grid(row=20,column=1),
+                      tkinter.Label(window, textvariable=self.vars[7]).grid(row=22,column=1),
+                      tkinter.Label(window, textvariable=self.vars[8]).grid(row=24,column=1),
+                      tkinter.Label(window, textvariable=self.vars[9]).grid(row=26,column=1),
+                      tkinter.Label(window, textvariable=self.vars[10]).grid(row=28,column=1),
+                      tkinter.Label(window, textvariable=self.vars[11]).grid(row=30,column=1),
+                      tkinter.Label(window, textvariable=self.vars[12]).grid(row=32,column=1),
+                      tkinter.Label(window, textvariable=self.vars[13]).grid(row=34,column=1),
+                      tkinter.Label(window, textvariable=self.vars[14]).grid(row=36,column=1)]
         i = 0
         for button in self.vars:
             self.vars[i].set("")
@@ -98,11 +99,19 @@ class GUI:
             i += 1
         i = 0
         for button in self.hbuttons:
-            if i <= 5:
+            if i <= 10:
                 button.grid(row=i+4, column=2)
             else:
-                button.grid(row=i+6, column=2)
-            i += 1
+                button.grid(row=i+8, column=2)
+            i += 2
+        
+        # horizontal lines
+        i = 0
+        for x in range(17):
+            tkinter.ttk.Separator(window, orient='horizontal').grid(column=0, row=5+i, columnspan=30, sticky = 'we')
+            i += 2
+
+            
 
     def set_players(self, players):
         # tähän looppi riippuen kuinka monta pelaajaa
@@ -117,34 +126,37 @@ class GUI:
             self.bonus_vars[i].set("")
             self.point_vars2[i].set("")
             i += 1
-        self.players_names = [tkinter.Label(self.window, text=self.player_vars[0].get()).grid(row=2,column=10),
-                              tkinter.Label(self.window, text=self.player_vars[1].get()).grid(row=2,column=12)]
-        self.point_labels = [tkinter.Label(self.window, text=self.point_vars[0].get()).grid(row=10,column=10),
-                              tkinter.Label(self.window, text=self.point_vars[1].get()).grid(row=10,column=12)]
-        self.bonus = [tkinter.Label(self.window, text=self.bonus_vars[0].get()).grid(row=11,column=10),
-                      tkinter.Label(self.window, text=self.bonus_vars[1].get()).grid(row=11,column=12)]
-        self.point_labels2 = [tkinter.Label(self.window, text=self.point_vars2[0].get()).grid(row=21,column=10),
-                              tkinter.Label(self.window, text=self.point_vars2[1].get()).grid(row=21,column=12)]
+        self.players_names = [tkinter.Label(self.window, text=self.player_vars[0].get()).grid(row=2,column=9),
+                              tkinter.Label(self.window, text=self.player_vars[1].get()).grid(row=2,column=11)]
+        self.point_labels = [tkinter.Label(self.window, text=self.point_vars[0].get(), font=('Helvetica',10,'bold')).grid(row=16,column=9),
+                              tkinter.Label(self.window, text=self.point_vars[1].get(), font=('Helvetica',10,'bold')).grid(row=16,column=11)]
+        self.bonus = [tkinter.Label(self.window, text=self.bonus_vars[0].get(), fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=9),
+                      tkinter.Label(self.window, text=self.bonus_vars[1].get(), fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=11)]
+        self.point_labels2 = [tkinter.Label(self.window, text=self.point_vars2[0].get(), font=('Helvetica',10,'bold')).grid(row=38,column=9),
+                              tkinter.Label(self.window, text=self.point_vars2[1].get(), font=('Helvetica',10,'bold')).grid(row=38,column=11)]
+        
+        tkinter.ttk.Separator(self.window, orient='vertical').grid(column=8, row=2, rowspan=40, sticky = 'ns')
+        tkinter.ttk.Separator(self.window, orient='vertical').grid(column=10, row=2, rowspan=40, sticky = 'ns')        
         
         i = 0
         for player in self.players_names:
-            self.points = [tkinter.Label(self.window, text="").grid(row=4,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=5,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=6,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=7,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=8,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=9,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=11,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=12,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=13,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=14,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=15,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=16,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=17,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=18,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=19,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=20,column=10+i),
-                           tkinter.Label(self.window, text="").grid(row=21,column=10+i)]
+            self.points = [tkinter.Label(self.window, text="").grid(row=4,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=6,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=8,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=10,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=12,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=14,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=16,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=18,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=20,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=22,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=24,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=26,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=28,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=30,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=32,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=34,column=9+i),
+                           tkinter.Label(self.window, text="").grid(row=36,column=9+i)]
             i += 2
 
 
@@ -180,32 +192,34 @@ class GUI:
     
     def add_score(self):
         i = 0
+        j = 0
         ind = self.game.get_player_num()
         for hand in self.hands_vars:
             if hand.get():
                 if self.vars[i].get() == "":
                     self.vars[i].set(0)
-                if i <= 5:
-                    self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+4,column=10+ind)
+                if j <= 10:
+                    self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=j+4,column=9+ind+ind)
                 else:
-                    self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=i+6,column=10+ind)
+                    self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=j+8,column=9+ind+ind)
                     
                 self.players[ind].add_hand(i)
                 self.players[ind].add_score(self.vars[i].get(), i)
  
                 self.point_vars[ind].set(self.players[ind].calculate_mid_points())
                 self.point_labels[ind] = tkinter.Label(self.window, 
-                                                       text=self.point_vars[ind].get()).grid(row=10,column=10+ind)     
+                                                       text=self.point_vars[ind].get(), font=('Helvetica',10,'bold')).grid(row=16,column=9+ind+ind)     
                 self.point_vars2[ind].set(self.players[ind].calculate_points())
                 self.point_labels2[ind] = tkinter.Label(self.window, 
-                                                       text=self.point_vars2[ind].get()).grid(row=21,column=10+ind)
+                                                       text=self.point_vars2[ind].get(), font=('Helvetica',10,'bold')).grid(row=38,column=9+ind+ind)
                 
                 if self.players[ind].check_bonus():
                     self.bonus_vars[ind].set("50")
                     self.bonus[ind] = tkinter.Label(self.window, 
-                                                       text=self.bonus_vars[ind].get()).grid(row=11,column=10+ind)  
+                                                       text=self.bonus_vars[ind].get(), fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=9+ind+ind)  
                 break
             i += 1
+            j += 2
 
 
     def add_command_to_button(self, turn):
@@ -216,7 +230,7 @@ class GUI:
         i = 0
         for player in players:
             self.player_vars[i].set(player.get_name())
-            self.players_names[i] = tkinter.Label(self.window, text=self.player_vars[i].get()).grid(row=2,column=i+10)
+            self.players_names[i] = tkinter.Label(self.window, text=self.player_vars[i].get()).grid(row=2,column=9+i+i)
             i += 1
 
 
@@ -265,3 +279,10 @@ class GUI:
         self.turn.set(self.game.get_player_num())
         name = self.players[int(self.turn.get())].get_name()
         self.hand_names[0] = tkinter.Label(self.window, text=name).grid(row=3,column=0)
+        
+        
+    def end_game(self):
+        #restart game lisää?
+        self.reset_turn()
+        self.throw_button.configure(state="disabled")
+        self.next_button.configure(state="disabled")

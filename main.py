@@ -31,7 +31,6 @@ if __name__ == "__main__":
         i += 1
 
     gui = gui_class.GUI(window, players)
-    #turn = Turn(gui)
     game = game_class.Game(gui, players)
     gui.add_game_logic(game)
     game.start()
