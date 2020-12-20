@@ -7,6 +7,9 @@ Created on Wed Dec 16 15:46:23 2020
 
 import tkinter
 import tkinter.ttk
+import time
+from random import randint
+from PIL import Image, ImageTk
 
 
 class GUI:
@@ -110,7 +113,32 @@ class GUI:
         for x in range(17):
             tkinter.ttk.Separator(window, orient='horizontal').grid(column=0, row=5+i, columnspan=30, sticky = 'we')
             i += 2
-
+            
+        self.images = []
+        image = Image.open("C:/Users/soder/Downloads/Alea_1.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_2.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_3.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_4.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_5.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_6.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
             
 
     def set_players(self, players):
@@ -178,8 +206,40 @@ class GUI:
     # käytetääks tätä?
     def update_dice(self, nro):
         self.dices[0] = nro
+        
+        
+    def change(self, i, nro):
+        label = tkinter.Label(self.window, image = self.images[nro-1])
+        label.image = self.images[nro-1]
+        label.grid(row=2, column=3+i)
+
+    
+    def throw_dice(self, i):
+        nro = randint(1,6)
+        label = tkinter.Label(self.window, image = self.images[nro-1])
+        label.image = self.images[nro-1]
+        label.grid(row=2, column=3+i)
+        nro = randint(1,6)
+        label.after(200, lambda:self.change(i,nro))
+        nro = randint(1,6)
+        label.after(400, lambda:self.change(i,nro))
+        nro = randint(1,6)
+        label.after(600, lambda:self.change(i,nro))
+        nro = randint(1,6)
+        label.after(800, lambda:self.change(i,nro))
+        nro = randint(1,6)
+        label.after(1000, lambda:self.change(i,nro))
+        nro = randint(1,6)
+        label.after(1200, lambda:self.change(i,nro))
+        self.dices[i] = nro
+
+        return self.dices[i]
 
         
+    def get_hand(self):
+        return self.dices
+    
+
     def get_dices(self, nro):
         for box in self.dbuttons:
             box.configure(state="normal")

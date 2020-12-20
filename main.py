@@ -14,7 +14,7 @@ import game_class
 if __name__ == "__main__":
     window = tkinter.Tk()
     window.title("Yatzy")
-    window.geometry("500x550")
+    window.geometry("500x600")
     window.resizable(0,0)
     window.lift()
     window.attributes("-topmost", True)

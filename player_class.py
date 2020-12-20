@@ -34,7 +34,7 @@ class Player:
         bonus_pts = 0
         for pts in bonus:
             bonus_pts += int(pts)
-        if bonus_pts >= 13:
+        if bonus_pts >= 63:
             return True
         else:
             return False
