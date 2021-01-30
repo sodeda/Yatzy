@@ -19,13 +19,13 @@ if __name__ == "__main__":
     window.lift()
     window.attributes("-topmost", True)
     
-    # parempi looppi!
+    nro_players = tkinter.simpledialog.askinteger("Players", "How many players?", parent=window)
     players = []
     i = 0
-    while i<2:
+    while i<nro_players:
         nro = i+1
         text = "Player "+ str(nro) +" name?"
-        name = tkinter.simpledialog.askstring("Input", text, parent=window)
+        name = tkinter.simpledialog.askstring("Player name", text, parent=window)
         player = player_class.Player(name)
         players.append(player)
         i += 1

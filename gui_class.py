@@ -143,28 +143,35 @@ class GUI:
 
     def set_players(self, players):
         # tähän looppi riippuen kuinka monta pelaajaa
-        self.player_vars = [tkinter.StringVar(), tkinter.StringVar()]
-        self.point_vars = [tkinter.StringVar(), tkinter.StringVar()]
-        self.bonus_vars = [tkinter.StringVar(), tkinter.StringVar()]
-        self.point_vars2 = [tkinter.StringVar(), tkinter.StringVar()]
+        self.player_vars = []
+        self.point_vars = []
+        self.bonus_vars = []
+        self.point_vars2 = []
+        self.players_names = []
+        self.point_labels = []
+        self.bonus = []
+        self.point_labels2 = []
         i = 0
-        for player in self.player_vars:
+        j = 0
+        for player in players:
+            self.player_vars.append(tkinter.StringVar())
+            self.point_vars.append(tkinter.StringVar())
+            self.bonus_vars.append(tkinter.StringVar())
+            self.point_vars2.append(tkinter.StringVar())
             self.player_vars[i].set("")
             self.point_vars[i].set("")
             self.bonus_vars[i].set("")
             self.point_vars2[i].set("")
-            i += 1
-        self.players_names = [tkinter.Label(self.window, text=self.player_vars[0].get()).grid(row=2,column=9),
-                              tkinter.Label(self.window, text=self.player_vars[1].get()).grid(row=2,column=11)]
-        self.point_labels = [tkinter.Label(self.window, text=self.point_vars[0].get(), font=('Helvetica',10,'bold')).grid(row=16,column=9),
-                              tkinter.Label(self.window, text=self.point_vars[1].get(), font=('Helvetica',10,'bold')).grid(row=16,column=11)]
-        self.bonus = [tkinter.Label(self.window, text=self.bonus_vars[0].get(), fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=9),
-                      tkinter.Label(self.window, text=self.bonus_vars[1].get(), fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=11)]
-        self.point_labels2 = [tkinter.Label(self.window, text=self.point_vars2[0].get(), font=('Helvetica',10,'bold')).grid(row=38,column=9),
-                              tkinter.Label(self.window, text=self.point_vars2[1].get(), font=('Helvetica',10,'bold')).grid(row=38,column=11)]
+
+            self.players_names.append(tkinter.Label(self.window, text=self.player_vars[i].get()).grid(row=2,column=9+j))
+            self.point_labels.append(tkinter.Label(self.window, text=self.point_vars[i].get(), font=('Helvetica',10,'bold')).grid(row=16,column=9+j))
+            self.bonus.append(tkinter.Label(self.window, text=self.bonus_vars[i].get(), fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=9+j))
+            self.point_labels2.append(tkinter.Label(self.window, text=self.point_vars2[i].get(), font=('Helvetica',10,'bold')).grid(row=38,column=9+j))
         
-        tkinter.ttk.Separator(self.window, orient='vertical').grid(column=8, row=2, rowspan=40, sticky = 'ns')
-        tkinter.ttk.Separator(self.window, orient='vertical').grid(column=10, row=2, rowspan=40, sticky = 'ns')        
+            tkinter.ttk.Separator(self.window, orient='vertical').grid(column=8+j, row=2, rowspan=40, sticky = 'ns')
+                
+            i += 1
+            j += 2
         
         i = 0
         for player in self.players_names:
