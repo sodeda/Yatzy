@@ -7,8 +7,6 @@ Created on Wed Dec 16 15:46:34 2020
 
 
 import tkinter
-import time
-from random import randint
 
 
 def count(hand, nro):
@@ -100,7 +98,7 @@ class Turn:
 
         if self.rolls == 3:
             self.hand = self.gui.get_hand()
-            print(self.hand)
+            #print(self.hand)
             self.give_possible_hands()
             self.gui.adjust_checboxes(self.hands)
             self.gui.change_buttons(0)
@@ -211,11 +209,3 @@ class Turn:
             if count(self.hand, n+1) == 5:
                 self.hands[14] = 50
                 self.gui.update_possible_hand(self.hands[14], 14)          
-            
-            
-    def test(self):
-        #print(self.vars[0].get())
-        #print(self.hand)
-        for i in self.hands:
-            print (i)
-        #pass

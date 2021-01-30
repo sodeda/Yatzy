@@ -5,9 +5,9 @@ Created on Wed Dec 16 15:46:23 2020
 @author: soderdahl
 """
 
+
 import tkinter
 import tkinter.ttk
-import time
 from random import randint
 from PIL import Image, ImageTk
 
@@ -22,11 +22,37 @@ class GUI:
         self.players = players
         self.set_players(players)
 
-        self.dices = [tkinter.Label(window, text="").grid(row=2,column=3),
-                      tkinter.Label(window, text="").grid(row=2,column=4),
-                      tkinter.Label(window, text="").grid(row=2,column=5),
-                      tkinter.Label(window, text="").grid(row=2,column=6),
-                      tkinter.Label(window, text="").grid(row=2,column=7)]
+        self.dices = [tkinter.Label(window, text="", width=5, height=2).grid(row=2,column=3),
+                      tkinter.Label(window, text="", width=5, height=2).grid(row=2,column=4),
+                      tkinter.Label(window, text="", width=5, height=2).grid(row=2,column=5),
+                      tkinter.Label(window, text="", width=5, height=2).grid(row=2,column=6),
+                      tkinter.Label(window, text="", width=5, height=2).grid(row=2,column=7)]
+        
+        self.images = []
+        image = Image.open("C:/Users/soder/Downloads/Alea_1.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_2.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_3.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_4.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_5.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
+        image = Image.open("C:/Users/soder/Downloads/Alea_6.png")
+        image = image.resize((30,30))
+        photo = ImageTk.PhotoImage(image)
+        self.images.append(photo)
         
         self.turn = tkinter.StringVar()
         self.hand_names = [tkinter.Label(window, text=self.turn.get()).grid(row=3,column=0),
@@ -81,21 +107,21 @@ class GUI:
                          tkinter.Checkbutton(window, variable=self.dice_vars[2]),
                          tkinter.Checkbutton(window, variable=self.dice_vars[3]),
                          tkinter.Checkbutton(window, variable=self.dice_vars[4])]    
-        self.hbuttons = [tkinter.Checkbutton(window, variable=self.hands_vars[0], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[1], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[2], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[3], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[4], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[5], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[6], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[7], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[8], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[9], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[10], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[11], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[12], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[13], state = 'disabled'),
-                         tkinter.Checkbutton(window, variable=self.hands_vars[14], state = 'disabled')]
+        self.hbuttons = [tkinter.Checkbutton(window, variable=self.hands_vars[0], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[1], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[2], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[3], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[4], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[5], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[6], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[7], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[8], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[9], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[10], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[11], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[12], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[13], state = 'disabled', command=self.activate_next_turn_button),
+                         tkinter.Checkbutton(window, variable=self.hands_vars[14], state = 'disabled', command=self.activate_next_turn_button)]
         i = 0
         for button in self.dbuttons:
             button.grid(row=3, column=3+i)
@@ -113,32 +139,6 @@ class GUI:
         for x in range(17):
             tkinter.ttk.Separator(window, orient='horizontal').grid(column=0, row=5+i, columnspan=30, sticky = 'we')
             i += 2
-            
-        self.images = []
-        image = Image.open("C:/Users/soder/Downloads/Alea_1.png")
-        image = image.resize((30,30))
-        photo = ImageTk.PhotoImage(image)
-        self.images.append(photo)
-        image = Image.open("C:/Users/soder/Downloads/Alea_2.png")
-        image = image.resize((30,30))
-        photo = ImageTk.PhotoImage(image)
-        self.images.append(photo)
-        image = Image.open("C:/Users/soder/Downloads/Alea_3.png")
-        image = image.resize((30,30))
-        photo = ImageTk.PhotoImage(image)
-        self.images.append(photo)
-        image = Image.open("C:/Users/soder/Downloads/Alea_4.png")
-        image = image.resize((30,30))
-        photo = ImageTk.PhotoImage(image)
-        self.images.append(photo)
-        image = Image.open("C:/Users/soder/Downloads/Alea_5.png")
-        image = image.resize((30,30))
-        photo = ImageTk.PhotoImage(image)
-        self.images.append(photo)
-        image = Image.open("C:/Users/soder/Downloads/Alea_6.png")
-        image = image.resize((30,30))
-        photo = ImageTk.PhotoImage(image)
-        self.images.append(photo)
             
 
     def set_players(self, players):
@@ -204,8 +204,8 @@ class GUI:
         
 
     # käytetääks tätä?
-    def update_dice(self, nro):
-        self.dices[0] = nro
+    # def update_dice(self, nro):
+    #     self.dices[0] = nro
         
         
     def change(self, i, nro):
@@ -297,11 +297,23 @@ class GUI:
     def change_buttons(self, state):
         if state == 0:
             self.throw_button.configure(state="disabled")
-            self.next_button.configure(state="normal")
+            # self.next_button.configure(state="normal")
         else:
             self.throw_button.configure(state="normal")
             self.next_button.configure(state="disabled")
             
+            
+    def activate_next_turn_button(self):
+        if self.next_button['state'] == "disabled":
+            i = 0
+            for checker in self.hands_vars:
+                if checker.get() == 1:
+                    i += 1
+            if i == 1:
+                self.next_button.configure(state="normal")
+        else:
+            self.next_button.configure(state="disabled")
+
             
     def adjust_checboxes(self, hands):
         ind = self.game.get_player_num()
