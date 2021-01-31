@@ -12,6 +12,7 @@ import game_class
 
 
 if __name__ == "__main__":
+    # game window settings
     window = tkinter.Tk()
     window.title("Yatzy")
     window.geometry("500x600")
@@ -19,7 +20,10 @@ if __name__ == "__main__":
     window.lift()
     window.attributes("-topmost", True)
     
+    # asks how many player will be playing
     nro_players = tkinter.simpledialog.askinteger("Players", "How many players?", parent=window)
+    
+    # asks player names and makes list of players (Player class)
     players = []
     i = 0
     while i<nro_players:
@@ -30,9 +34,11 @@ if __name__ == "__main__":
         players.append(player)
         i += 1
 
+    # initializes gui and game-logic with given players
     gui = gui_class.GUI(window, players)
     game = game_class.Game(gui, players)
     gui.add_game_logic(game)
+    
     game.start()
     
     window.mainloop()

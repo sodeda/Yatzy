@@ -8,6 +8,7 @@ Created on Wed Dec 16 15:46:23 2020
 
 import tkinter
 import tkinter.ttk
+import scores_class
 from random import randint
 from PIL import Image, ImageTk
 
@@ -209,11 +210,6 @@ class GUI:
         else:
             return
         
-
-    # käytetääks tätä?
-    # def update_dice(self, nro):
-    #     self.dices[0] = nro
-        
         
     def change(self, i, nro):
         label = tkinter.Label(self.window, image = self.images[nro-1])
@@ -271,16 +267,19 @@ class GUI:
                     self.points[i] = tkinter.Label(self.window, text=self.vars[i].get()).grid(row=j+8,column=9+ind+ind)
                     
                 self.players[ind].add_hand(i)
-                self.players[ind].add_score(self.vars[i].get(), i)
+                self.game.add_score(self.vars[i].get(), i, ind)
+                #self.players[ind].add_score(self.vars[i].get(), i)
  
-                self.point_vars[ind].set(self.players[ind].calculate_mid_points())
+                points = self.game.calculate_scores(ind)
+    
+                self.point_vars[ind].set(points[0])
                 self.point_labels[ind] = tkinter.Label(self.window, 
                                                        text=self.point_vars[ind].get(), font=('Helvetica',10,'bold')).grid(row=16,column=9+ind+ind)     
-                self.point_vars2[ind].set(self.players[ind].calculate_points())
+                self.point_vars2[ind].set(points[1])
                 self.point_labels2[ind] = tkinter.Label(self.window, 
                                                        text=self.point_vars2[ind].get(), font=('Helvetica',10,'bold')).grid(row=38,column=9+ind+ind)
                 
-                if self.players[ind].check_bonus():
+                if points[2]:
                     self.bonus_vars[ind].set("50")
                     self.bonus[ind] = tkinter.Label(self.window, 
                                                        text=self.bonus_vars[ind].get(), fg='red', font=('Helvetica',9,'bold')).grid(row=18,column=9+ind+ind)  
