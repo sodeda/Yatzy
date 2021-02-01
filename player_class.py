@@ -12,17 +12,15 @@ class Player:
         
         # used_hands tells what hands player has already used so it can't be used again
         self.used_hands = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-        # tracking players points
-        self.points = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         
         
-    def get_name(self):
-        return self.name
-    
-    
     # marks given hand used
     def add_hand(self, hand):
         self.used_hands[hand] = 1
+
+        
+    def get_name(self):
+        return self.name
         
         
     def check_hands(self):

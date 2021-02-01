@@ -10,17 +10,18 @@ class Scores:
     def __init__(self, players):
         self.players = players
         
-        #player_points = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        # all players points initialized to 0
         self.all_points = []
         for player in players:
             self.all_points.append([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
     
     
-    def add_score(self, point, hand, ind):
-        self.all_points[ind][hand] = point
-        print(self.all_points)
+    # adds score to given hand and player
+    def add_score(self, point, hand, player):
+        self.all_points[player][hand] = point
         
-        
+    
+    # checks of the bonus points are acquired
     def check_bonus(self,ind):
         bonus = self.all_points[ind][0:6]
         bonus_pts = 0
@@ -31,7 +32,8 @@ class Scores:
         else:
             return False
         
-        
+    
+    # calculates upper points
     def calculate_mid_points(self, ind):
         points = 0
         for point in self.all_points[ind][0:6]:
@@ -40,6 +42,7 @@ class Scores:
         return int(points)
     
     
+    # calculates all points
     def calculate_points(self, ind):
         points = 0
         for point in self.all_points[ind]:
